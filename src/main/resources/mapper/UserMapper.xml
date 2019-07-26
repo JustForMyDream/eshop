@@ -108,7 +108,7 @@
     <include refid="Base_Column_List" />
     from user where 1 = 1
     and username = #{username}
-    and username = #{username}
+    and password = #{password}
     limit 0,1
   </select>
 

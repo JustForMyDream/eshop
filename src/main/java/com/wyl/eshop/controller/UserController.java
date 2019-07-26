@@ -19,6 +19,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/api/user")
+@CrossOrigin
 public class UserController {
 
     @Autowired
@@ -34,13 +35,21 @@ public class UserController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public RestResponse login(@RequestParam(value = "username") String username,
-                              @RequestParam(value = "password") String password){
-        System.out.println("username:"+username+"password:"+password);
-//        Map<String,Object> map = new HashMap<>();
-//        User user1 = userService.checkLogin(user);
-//        map.put("data","");
-        return RestResponse.success();
+    public RestResponse login(@RequestBody User user) {
+
+        Map<String,Object> map = new HashMap<>();
+//        User user = new User();
+//        user.setUsername(username);
+//        user.setPassword(password);
+        User checkUser = userService.checkLogin(user);
+        if(checkUser != null){
+            map.put("user",checkUser);
+            return RestResponse.success(map);
+        }else {
+            return RestResponse.error(400,"fail");
+        }
+
+
     }
 
 
