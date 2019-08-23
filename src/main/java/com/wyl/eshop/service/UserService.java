@@ -1,6 +1,7 @@
 package com.wyl.eshop.service;
 
 import com.wyl.eshop.bean.User;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.List;
 @Component
 public interface UserService {
 
+    @Cacheable()
     public User getUserById(int id);
 
     public User checkLogin(User user);

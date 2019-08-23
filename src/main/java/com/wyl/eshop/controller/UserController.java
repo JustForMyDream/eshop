@@ -17,15 +17,14 @@ import java.util.Map;
  * @Version 1.0 :
  * @Description :
  */
-@RestController
-@RequestMapping("/api/user")
+@RestController("/api/user")
 @CrossOrigin
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    @GetMapping(value = "/test")
     public RestResponse test(HttpServletRequest request){
         String id = request.getParameter("id");
         User user = userService.getUserById(Integer.parseInt(id));
@@ -48,9 +47,9 @@ public class UserController {
         }else {
             return RestResponse.error(400,"fail");
         }
-
-
     }
+
+
 
 
 }
