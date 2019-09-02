@@ -15,7 +15,6 @@ import java.util.List;
 @Component
 public interface UserService {
 
-    @Cacheable()
     public User getUserById(int id);
 
     public User checkLogin(User user);
