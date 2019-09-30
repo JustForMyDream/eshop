@@ -13,14 +13,34 @@ public class MyThread extends Thread {
     private int printCount = 0;
     volatile private static int addNumber = 1;
 
-    public static void main(String[] args) {
-        String ids = "1,23,344";
-        StringBuilder sb = new StringBuilder("delete from GM_RightSetting where orgId = ? and type = ? and hrmId in (");
-        String []arrId = ids.split(",");
-        for (int i = 0;i < arrId.length;i ++){
-            sb.append("?,");
+    public MyThread(Object lock,String showChar, int showNumberPosition){
+        super();
+        this.lock = lock;
+        this.showChar = showChar;
+        this.showNumberPosition = showNumberPosition;
+    }
+
+    @Override
+    public void run() {
+        try {
+            synchronized (lock){
+                while (true){
+                    if(addNumber % 3 == showNumberPosition){
+                        System.out.println("threadname = "+Thread.currentThread().getName()+" runCount=" + addNumber + " " + showChar);
+                        lock.notifyAll();
+                        addNumber++;
+                        printCount++;
+                        if(printCount == 3){
+                            break;
+                        }
+                    }else {
+                        lock.wait();
+                    }
+
+                }
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-        sb.replace(sb.length()-1,sb.length(),")");
-        System.out.println(sb.toString());
     }
 }
